@@ -1,0 +1,28 @@
+{
+  "name": "link_shorter",
+  "version": "1.0.0",
+  "description": "link shorter app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daredevilh/link_shorter.git"
+  },
+  "keywords": [
+    "mern",
+    "link",
+    "shorter"
+  ],
+  "author": "Hlib Zinchenko <anothergleb.z164@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daredevilh/link_shorter/issues"
+  },
+  "homepage": "https://github.com/daredevilh/link_shorter#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.10.5"
+  }
+}
