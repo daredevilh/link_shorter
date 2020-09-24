@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import { useHttp } from '../hooks/http.hook';
+import { useMessage } from '../hooks/message.hook';
 
 export const AuthPage = () => {
-    const { loading, error, request } = useHttp();
+    const auth = useContext(AuthContext);
+    const message = useMessage();
+    const { loading, request, error, clearError } = useHttp();
     const [form, setForm] = useState({
         email: '',
         password: ''
     });
+
+    useEffect(() => {
+        message(error);
+        clearError();
+    }, [error, message, clearError]);
 
     const changeHandler = event => {
         setForm({ ...form, [event.target.name]: event.target.value });
@@ -14,15 +23,22 @@ export const AuthPage = () => {
 
     const registerHandler = async () => {
         try {
-            const data = await request('/api/auth/register', 'POST', {...form});
+            const data = await request('http://localhost:5000/api/auth/register', 'POST', {...form});
             console.log('Data', data);
+        } catch (e) {}
+    }
+
+    const loginHandler = async () => {
+        try {
+            const data = await request('http://localhost:5000/api/auth/register', 'POST', {...form});
+            auth.login(data.token, data.userId);
         } catch (e) {}
     }
     
     return (
         <div className='row'>
             <div className='col s6 offset-s3'>
-                <h1>Сократи ссылку YaY</h1>
+                <h1>Сократи ссылку</h1>
                 <div className='card blue lighten-1'>
                     <div className='card-content white-text'>
                         <span className='card-title'>Авторизация</span>
@@ -55,7 +71,7 @@ export const AuthPage = () => {
                         </div>
                     </div>
                     <div className='card-action'>
-                        <button className='btn yellow darken-4' style={{marginRight: 10}} disabled={loading}>Войти</button>
+                        <button className='btn yellow darken-4' onClick={loginHandler} style={{marginRight: 10}} disabled={loading}>Войти</button>
                         <button className='btn grey lighten-1 black-text' onClick={registerHandler} disabled={loading}>Регистрация</button>
                     </div>
                 </div>
